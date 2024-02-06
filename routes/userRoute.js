@@ -2,6 +2,14 @@ const express = require("express");
 const User = require("../models/UseModel");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
+
+function generateReferralCode() {
+  const hash = crypto.createHash("sha256");
+  hash.update(Date.now().toString()); // Using current timestamp for uniqueness
+  const code = hash.digest("hex").substring(0, 7); // Truncate to desired length
+  return code;
+}
 
 router.post("/", async (req, res) => {
   const {
@@ -33,7 +41,7 @@ router.post("/", async (req, res) => {
         .json({ message: "Discord Account already applied" });
     }
 
-    const generatedReferralCode = uuidv4();
+    const generatedReferralCode = generateReferralCode();
 
     const user = await User.create({
       twitter_username,
