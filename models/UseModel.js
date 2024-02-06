@@ -26,6 +26,10 @@ const userSchema = mongoose.Schema(
     referral_code: {
       type: String,
     },
+     whitelist_status: {
+      type: String,
+      default: "Pending",
+    },
     referral_count: {
       type: Number,
       default: 0,
