@@ -14,7 +14,7 @@ app.use(express.json());
 // cors
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://seinobodies.xyz", "https://luminous-begonia-03e2fc.netlify.app"],
+    origin: ["http://localhost:5173", "https://kamigami.io", "https://luminous-begonia-03e2fc.netlify.app"],
     credentials: true,
   })
 );
