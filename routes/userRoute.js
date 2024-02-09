@@ -93,4 +93,38 @@ router.get("/:twitter_username", async (req, res) => {
   }
 });
 
+router.get("/approved", async (req, res) => {
+  try {
+    const approvedUsers = await User.find({ whitelist_status: true });
+    console.log("Approved Users:", approvedUsers); 
+    if (approvedUsers.length === 0) {
+      return res.status(404).json({ message: "No approved users found" });
+    }
+    res.status(200).json(approvedUsers);
+  } catch (error) {
+    console.error("Error fetching approved users:", error); // Log any errors
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.put("/:id/approve", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not foundjhjh" });
+    }
+
+    user.whitelist_status = true; // Set whitelist_status to true (approved)
+    await user.save();
+
+    res.status(200).json({ message: "User whitelist status updated to Approved" });
+  } catch (error) {
+    console.error("Error updating whitelist status:", error); // Log any errors
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

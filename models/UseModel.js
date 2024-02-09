@@ -26,9 +26,9 @@ const userSchema = mongoose.Schema(
     referral_code: {
       type: String,
     },
-     whitelist_status: {
-      type: String,
-      default: "Pending",
+    whitelist_status: {
+      type: Boolean,
+      default: false, // Default value for whitelist_status is set to false
     },
     referral_count: {
       type: Number,
