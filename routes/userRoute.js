@@ -127,4 +127,24 @@ router.put("/:id/approve", async (req, res) => {
   }
 });
 
+router.put("/:id/delist", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not foundjhjh" });
+    }
+
+    user.whitelist_status = false; // Set whitelist_status to true (approved)
+    await user.save();
+
+    res.status(200).json({ message: "User delisted" });
+  } catch (error) {
+    console.error("Error updating whitelist status:", error); // Log any errors
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
